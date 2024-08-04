@@ -48,3 +48,8 @@ if courses_section:
 
                 print(f"course Name: {course_name}")
                 print(f"Download Link: {course_info_download_link}")
+
+#extracting applications 
+#extarcting admission requirements
+#extracting tenders
+#extracting contact information
