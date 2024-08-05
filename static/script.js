@@ -4,7 +4,6 @@ const closeBtn = document.querySelector(".close-btn");
 const chatbox = document.querySelector(".message-box");
 const chatInput = document.querySelector(".message-input textarea");
 const sendChatBtn = document.querySelector("#send-btn");
-const containerText = document.querySelector(".container p");
 
 // Initialize variables
 let userMessage = null; // To store the user message
@@ -24,70 +23,46 @@ const createChatLi = (message, className) => {
 }
 
 // Generates a response using the Flask API and updates the chat element
-const generateResponse = (chatElement) => {
-    const messageElement = chatElement.querySelector("p");
-
-    // Define request options for the Flask API call
-    const requestOptions = {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            message: userMessage
-        })
-    }
-
-    // Fetch API response from Flask backend and update the chat element
-    fetch("/chat", requestOptions) // Assuming Flask endpoint is '/chat'
-        .then(res => res.json())
-        .then(data => {
-            messageElement.textContent = data.response.trim(); // Update with the response from Flask
-        })
-        .catch(() => {
-            messageElement.classList.add("error");
-            messageElement.textContent = "Oops! Something went wrong. Please try again.";
-        })
-        .finally(() => chatbox.scrollTo(0, chatbox.scrollHeight));
+const generateResponse = async (message) => {
+    const response = await fetch('/chat', {
+        method: 'POST',
+        body: JSON.stringify({ message: message }),
+        headers: { 'Content-Type': 'application/json' }
+    });
+    const data = await response.json();
+    return data.response;
 }
 
-// Handles sending a chat message and generating a response
-const handleChat = () => {
-    userMessage = chatInput.value.trim(); // Get and trim user input
-    if (!userMessage) return; // Exit if message is empty
-
-    // Clear input textarea and reset height
-    chatInput.value = "";
-    chatInput.style.height = `${inputInitHeight}px`;
+// Handle sending the message
+const handleSendMessage = async () => {
+    userMessage = chatInput.value.trim(); // Get the user message and remove extra spaces
+    if(!userMessage) return; // If the input is empty, return
 
     // Append the user's message to the chatbox
-    chatbox.appendChild(createChatLi(userMessage, "outgoing"));
-    chatbox.scrollTo(0, chatbox.scrollHeight);
-    
-    // Simulate Typing and generate response after a short delay
-    setTimeout(() => {
-        const incomingChatLi = createChatLi("Typing...", "incoming");
-        chatbox.appendChild(incomingChatLi);
-        chatbox.scrollTo(0, chatbox.scrollHeight);
-        generateResponse(incomingChatLi);
-    }, 600);
+    chatbox.appendChild(createChatLi(userMessage, 'outgoing'));
+    chatInput.value = ''; // Clear the input field
+
+    // Send the user's message to the server and get the response
+    const responseMessage = await generateResponse(userMessage);
+    chatbox.appendChild(createChatLi(responseMessage, 'incoming')); // Append the response message to the chatbox
+
+    // Scroll the chatbox to the bottom
+    chatbox.scrollTop = chatbox.scrollHeight;
 }
 
-// Adjust textarea height dynamically based on input
-chatInput.addEventListener("input", () => {
-    chatInput.style.height = `${inputInitHeight}px`;
-    chatInput.style.height = `${chatInput.scrollHeight}px`;
-});
+// Toggle chat interface visibility
+const toggleChat = () => {
+    document.querySelector(".chat-interface").classList.toggle("active");
+    document.querySelector(".toggle-chat").classList.toggle("hidden"); // Add/remove hidden class
+}
 
-// Handle Enter key for sending message on larger screens
-chatInput.addEventListener("keydown", (e) => {
-    if (e.key === "Enter" && !e.shiftKey && window.innerWidth > 800) {
-        e.preventDefault();
-        handleChat();
+// Event listeners
+sendChatBtn.addEventListener('click', handleSendMessage);
+chatInput.addEventListener('keypress', (e) => {
+    if(e.key === 'Enter') {
+        e.preventDefault(); // Prevent the default form submission
+        handleSendMessage();
     }
 });
-
-// Handle click events for sending message and toggling chatbot visibility
-sendChatBtn.addEventListener("click", handleChat);
-closeBtn.addEventListener("click", () => document.body.classList.remove("show-chatbot"));
-chatbotToggler.addEventListener("click", () => document.body.classList.toggle("show-chatbot"));
+chatbotToggler.addEventListener('click', toggleChat);
+closeBtn.addEventListener('click', toggleChat);
