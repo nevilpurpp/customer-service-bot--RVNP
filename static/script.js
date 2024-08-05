@@ -53,7 +53,7 @@ const handleSendMessage = async () => {
 // Toggle chat interface visibility
 const toggleChat = () => {
     document.querySelector(".chat-interface").classList.toggle("active");
-    document.querySelector(".toggle-chat").classList.toggle("hidden"); // Add/remove hidden class
+    document.querySelector(".toggle-chat").classList.toggle("hidden");
 }
 
 // Event listeners

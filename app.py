@@ -214,7 +214,11 @@ def index():
 @app.route('/chat', methods=['POST'])
 def chat():
     user_message = request.json.get('message')
-    chat_session = model.start_chat(history=[{"role": "user", "parts": [user_message]}])
+    chat_session = model.start_chat(history=[
+        {
+            "role": "user", "parts": [user_message]
+        }
+        ])
     response = chat_session.send_message(user_message)
     return jsonify({'response': response.text})
 
