@@ -1,0 +1,255 @@
+/*Global Styles
+Wrapper Styles 
+Toggle Button Styles
+Chat Interface Styles
+Message Box Styles
+Message Input Styles
+Responsive Styles*/
+
+
+
+/*importing the google font poppins */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+/*set the defaults font, reset the margins and padding for all elements */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+   /*Toggle Button Styles*/
+
+.toggle-chat {
+    position: fixed;
+    bottom: 30px;
+    right: 35px;
+    outline: none;
+    border: none;
+    height: 50px;
+    width: 50px;
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #2ef158;
+    transition: all 0.2s ease;
+  }
+  
+  body.show-chatbot .toggle-chat {
+    transform: rotate(90deg);
+  }
+  
+  .toggle-chat span {
+    color: #fff;
+    position: absolute;
+  }
+  
+  .toggle-chat span:last-child,
+  body.show-chatbot .toggle-chat span:first-child {
+    opacity: 0;
+  }
+  
+  body.show-chatbot .toggle-chat span:last-child {
+    opacity: 1;
+  }
+
+  /*Chat Interface*/
+  /* Styling the main chat interface container */
+  .chat-interface {
+    position: fixed;
+    right: 35px;
+    bottom: 90px;
+    width: 420px;
+    background: #fff;
+    border-radius: 15px;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(0.5);
+    transform-origin: bottom right;
+    box-shadow: 0 0 128px 0 rgba(0,0,0,0.1),
+                0 32px 64px -48px rgba(0,0,0,0.5);
+    transition: all 0.1s ease;
+  }
+
+  /* Show chat interface when the chatbot is active */
+  
+  body.show-chatbot .chat-interface {
+    opacity: 1;
+    pointer-events: auto;
+    transform: scale(1);
+  }
+  
+  /* Styling the header of the chat interface */
+  .chat-interface header {
+    padding: 16px 0;
+    position: relative;
+    text-align: center;
+    color: #fff;
+    background: #25dd6c;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  }
+
+  /* Styling the close button in the header */
+  
+  .chat-interface header .close-btn {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    display: none;
+    cursor: pointer;
+    transform: translateY(-50%);
+  }
+  
+  header h2 {
+    font-size: 1.4rem;
+  }
+
+  /*Message Box*/
+
+  .message-box {
+    overflow-y: auto;
+    height: 510px;
+    padding: 30px 20px 100px;
+  }
+
+  /* Customizing the scrollbar */
+  
+  .message-box ::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  .message-box ::-webkit-scrollbar-track {
+    background: #fff;
+    border-radius: 25px;
+  }
+  
+  .message-box ::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 25px;
+  }
+
+  /* Styling individual messages */
+  
+  .message-box .message {
+    display: flex;
+    list-style: none;
+  }
+  
+  .message-box .outgoing {
+    margin: 20px 0;
+    justify-content: flex-end;
+  }
+  
+  .message-box .incoming span {
+    width: 32px;
+    height: 32px;
+    color: #fff;
+    cursor: default;
+    text-align: center;
+    line-height: 32px;
+    align-self: flex-end;
+    background: #5cdc5c;
+    border-radius: 4px;
+    margin: 0 10px 7px 0;
+  }
+  
+  .message-box .message p {
+    white-space: pre-wrap;
+    padding: 12px 16px;
+    border-radius: 10px 10px 0 10px;
+    max-width: 75%;
+    color: #fff;
+    font-size: 0.95rem;
+    background: #5cdc5c;
+  }
+  
+  .message-box .incoming p {
+    border-radius: 10px 10px 10px 0;
+    color: #000;
+    background: #f2f2f2;
+  }
+  
+  .message-box .message p.error {
+    color: #721c24;
+    background: #f8d7da;
+  }
+
+  /*Message Input*/
+  
+
+  .message-input {
+    display: flex;
+    gap: 5px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background: #fff;
+    padding: 3px 20px;
+    border-top: 1px solid #ddd;
+  }
+  
+
+  /* Styling the textarea within the message input */
+  .message-input textarea {
+    height: 55px;
+    width: 100%;
+    border: none;
+    outline: none;
+    resize: none;
+    max-height: 180px;
+    padding: 15px 15px 15px 0;
+    font-size: 0.95rem;
+  }
+
+  /* Styling the send button within the message input */
+  
+  .message-input span {
+    align-self: flex-end;
+    color: #5cdc5c;
+    cursor: pointer;
+    height: 55px;
+    display: flex;
+    align-items: center;
+    visibility: hidden;
+    font-size: 1.35rem;
+  }
+
+  /* Show the send button when textarea is valid */
+
+  
+  .message-input textarea:valid ~ span {
+    visibility: visible;
+  }
+
+  /*Responsive */
+
+  /* Adjustments for smaller screens */
+
+  @media (max-width: 490px) {
+    .toggle-chat {
+      right: 20px;
+      bottom: 20px;
+    }
+    .chat-interface {
+      right: 0;
+      bottom: 0;
+      height: 100%;
+      border-radius: 0;
+      width: 100%;
+    }
+    .chat-interface .message-box {
+      height: 90%;
+      padding: 25px 15px 100px;
+    }
+    .chat-interface .message-input {
+      padding: 5px 15px;
+    }
+    .chat-interface header .close-btn {
+      display: block;
+    }
+  }
+  
