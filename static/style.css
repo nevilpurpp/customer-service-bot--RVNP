@@ -1,5 +1,4 @@
 /* Global Styles */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
 * {
   margin: 0;
   padding: 0;
@@ -21,14 +20,14 @@
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background: #2ef158;
+  background: #2eec71; /* Maintain green theme */
   transition: all 0.2s ease;
   z-index: 10; 
 }
 
 body.show-chatbot .toggle-chat {
   transform: rotate(90deg);
-  background: #2ef158; 
+  background: #2eec71; /* Maintain green theme */
 }
 
 .toggle-chat span {
@@ -48,9 +47,9 @@ body.show-chatbot .toggle-chat span:last-child {
 /* Chat Interface */
 .chat-interface {
   position: fixed;
-  right: 35px;
-  bottom: 140px; 
-  width: 420px;
+  right: 50px; /* Adjust positioning to bring chatbox in view */
+  bottom: 100px; /* Adjust positioning */
+  width: 350px; /* Slightly reduce width for better fit */
   background: #fff;
   border-radius: 15px;
   overflow: hidden;
@@ -58,9 +57,8 @@ body.show-chatbot .toggle-chat span:last-child {
   pointer-events: none;
   transform: scale(0.5);
   transform-origin: bottom right;
-  box-shadow: 0 0 128px 0 rgba(0,0,0,0.1),
-              0 32px 64px -48px rgba(0,0,0,0.5);
-  transition: all 0.1s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: all 0.2s ease-in-out;
   z-index: 5; 
 }
 
@@ -68,7 +66,6 @@ body.show-chatbot .chat-interface {
   opacity: 1;
   pointer-events: auto;
   transform: scale(1);
-  bottom: 70px; 
 }
 
 /* Chat Header */
@@ -77,101 +74,83 @@ body.show-chatbot .chat-interface {
   align-items: center;
   justify-content: space-between; 
   padding: 16px 20px;
-  position: relative;
-  text-align: center;
   color: #fff;
-  background: #25dd6c;
+  background: #2eec71; /* Maintain green theme */
   box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
 
-.header-logo {
-  width: 45px; 
-  height: auto;
-  margin-right: 15px;
-}
-
-.header-content {
-  flex: 1; 
-  text-align: center; 
-}
-
+/* Close Button */
 .close-btn {
   cursor: pointer;
   font-size: 1.5rem;
 }
 
+/* Header Logo Styles */
+.header-logo {
+  max-height: 70px; /* Set maximum height to reduce size */
+  max-width: 70px;  /* Set maximum width */
+  margin-right: 15px; /* Space between logo and header text */
+  object-fit: contain; /* Maintain aspect ratio */
+}
+
 /* Message Box */
 .message-box {
   overflow-y: auto;
-  height: 460px;
-  padding: 20px 10px 100px;
+  height: 400px;
+  padding: 15px 15px 80px; /* Reduce padding for better fit */
+  background: #f9f9f9; /* Light background for better contrast */
 }
 
-.message-box ::-webkit-scrollbar {
-  width: 6px;
-}
-
-.message-box ::-webkit-scrollbar-track {
-  background: #fff;
-  border-radius: 25px;
-}
-
-.message-box ::-webkit-scrollbar-thumb {
-  background: #ccc;
-  border-radius: 25px;
-}
-
+/* Messages */
 .message-box .message {
   display: flex;
   list-style: none;
-  max-width: 100%; 
+  max-width: 100%;
+  margin-bottom: 10px; /* Spacing between messages */
+  opacity: 0;
+  animation: fadeIn 0.3s forwards; /* Fade-in effect for messages */
 }
 
-.message-box .message p {
-  white-space: pre-wrap;
-  padding: 12px 16px;
-  border-radius: 10px 10px 0 10px;
-  max-width: 75%;
-  color: #fff;
-  font-size: 0.95rem;
-  background: #5cdc5c;
-  word-wrap: break-word; 
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
 }
 
-.message-box .incoming p {
-  border-radius: 10px 10px 10px 0;
-  color: #000;
-  background: #f2f2f2;
-}
-
-.message-box .message p a {
-  color: #1a73e8; 
-  text-decoration: none; 
-}
-
-.message-box .message p a:hover {
-  text-decoration: underline; 
-}
-
-.message-box .outgoing {
-  margin: 20px 0;
-  justify-content: flex-end;
-}
-
+/* Incoming Messages */
 .message-box .incoming {
   display: flex; 
-  align-items: center; /* Ensure vertical alignment */
+  align-items: center; 
 }
 
 .message-box .incoming img.chat-icon {
-  width: 37px; /* Adjust size as needed */
-  height: auto;
-  margin-right: 15px; /* Space between image and text */
+  width: 35px;
+  height: 35px;
+  border-radius: 50%; /* Rounded avatar */
+  margin-right: 10px; /* Adjust spacing */
 }
 
-.message-box .message p.error {
-  color: #721c24;
-  background: #f8d7da;
+.message-box .incoming p {
+  background: #e6f4ea;
+  color: #333;
+  border-radius: 12px 12px 12px 0;
+  padding: 10px 15px;
+  max-width: 75%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Outgoing Messages */
+.message-box .outgoing {
+  justify-content: flex-end;
+}
+
+.message-box .outgoing p {
+  background: #2eec71;
+  color: #fff;
+  border-radius: 12px 12px 0 12px;
+  padding: 10px 15px;
+  max-width: 75%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* Message Input */
@@ -182,61 +161,136 @@ body.show-chatbot .chat-interface {
   bottom: 0;
   width: 100%;
   background: #fff;
-  padding: 3px 20px;
+  padding: 10px 20px;
   border-top: 1px solid #ddd;
 }
 
 .message-input textarea {
-  height: 55px;
-  width: 100%;
-  border: none;
+  height: 45px;
+  width: calc(100% - 50px); /* Reduce width to make space for the send button */
+  border: 1px solid #ddd;
+  border-radius: 25px;
   outline: none;
   resize: none;
-  max-height: 180px;
-  padding: 15px 15px 15px 0;
+  padding: 10px 15px;
   font-size: 0.95rem;
 }
 
+.message-input textarea:focus {
+  border-color: #2eec71;
+}
+
 .message-input span {
-  align-self: flex-end;
-  color: #5cdc5c;
+  align-self: center;
+  color: #fff;
+  background: #2eec71; /* Maintain green theme */
+  border-radius: 50%;
   cursor: pointer;
-  height: 55px;
+  height: 40px;
+  width: 40px;
   display: flex;
   align-items: center;
-  visibility: hidden;
-  font-size: 1.35rem;
+  justify-content: center;
+  transition: background 0.3s;
 }
 
-.message-input textarea:valid ~ span {
-  visibility: visible;
+.message-input span:hover {
+  background: #26c05a; /* Slightly darker green on hover */
 }
 
-/* Responsive */
+/* Typing Indicator */
+.typing-indicator {
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+}
+
+.typing-indicator .typing {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  padding: 12px 16px;
+  background: #e6f4ea; /* Maintain greenish theme for typing indicator */
+  border-radius: 12px 12px 12px 0;
+}
+
+.typing-indicator .typing span {
+  display: block;
+  width: 8px;
+  height: 8px;
+  background: #999;
+  border-radius: 50%;
+  animation: typing 1s infinite alternate;
+}
+
+.typing-indicator .typing span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.typing-indicator .typing span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes typing {
+  0% {
+      opacity: 0.3;
+  }
+  100% {
+      opacity: 1;
+  }
+}
+
+/* Responsive Adjustments */
 @media (max-width: 490px) {
   .toggle-chat {
     right: 20px;
     bottom: 20px;
   }
+
   .chat-interface {
-    right: 0;
-    bottom: 0;
-    height: 100%;
-    border-radius: 0;
-    width: 100%;
-  }
-  .chat-interface .message-box {
-    height: 90%;
-    padding: 25px 15px 100px;
-  }
-  .chat-interface .message-input {
-    padding: 5px 15px;
-  }
-  .chat-interface header .close-btn {
-    display: block;
+    right: 10px; /* Adjust to fit mobile view */
+    bottom: 80px; /* Move chat interface higher on mobile */
+    width: calc(100% - 20px); /* Use full width on mobile */
+    height: 85%; /* Adjust height on mobile */
+    border-radius: 15px; /* Round corners */
+    transform-origin: bottom right;
   }
 
-  
+  .chat-interface header {
+    padding: 10px 15px; /* Reduce padding for mobile */
+    align-items: center; /* Center align header items */
+    justify-content: center; /* Center header content */
+  }
 
-  
+  .header-logo {
+    max-height: 35px; /* Reduce logo size */
+    max-width: 35px; /* Reduce logo size */
+  }
+
+  .chat-interface header h2 {
+    font-size: 1.1rem; /* Smaller font for mobile */
+    margin-left: auto; /* Center the header text */
+    margin-right: auto; /* Center the header text */
+  }
+
+  .message-box {
+    height: calc(100% - 110px); /* Adjust height to fit within screen */
+    padding: 10px; /* Reduce padding */
+  }
+
+  .message-input {
+    padding: 10px 15px; /* Reduce padding */
+    bottom: 0; /* Keep input at bottom */
+  }
+
+  .message-input textarea {
+    height: 40px; /* Smaller input box */
+    font-size: 0.85rem; /* Smaller font size */
+    width: calc(100% - 50px); /* Use full width */
+  }
+
+  .message-input span {
+    height: 36px; /* Slightly smaller send button */
+    width: 36px; /* Slightly smaller send button */
+  }
 }

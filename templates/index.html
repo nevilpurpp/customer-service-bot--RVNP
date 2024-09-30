@@ -11,15 +11,15 @@
     <script src="{{ url_for('static', filename='script.js') }}" defer></script>
 </head>
 <body>
-    <button class="toggle-chat">
+    <button class="toggle-chat" aria-label="Toggle Chat">
         <span class="material-symbols-rounded">mode_comment</span>
         <span class="material-symbols-rounded">close</span>
     </button>
     <div class="chat-interface">
         <header>
-            <img src="{{ url_for('static', filename='images/logo-rvnp.svg') }}" alt="RVIST" class="header-logo">
+            <img src="{{ url_for('static', filename='images/logo-rvnp.png') }}" alt="RVIST" class="header-logo">
             <h2>RVNP BOT</h2>
-            <span class="close-btn material-symbols-rounded">close</span>
+            <span class="close-btn material-symbols-rounded" role="button" aria-label="Close chat">close</span>
         </header>
         <ul class="message-box">
             <li class="message incoming">
@@ -27,14 +27,10 @@
                 <p>Hi there 👋<br>How can I help you today?</p>
             </li>
         </ul>
-        <div class="message-input">
-            <textarea placeholder="Enter a message..." spellcheck="false" required></textarea>
-            <span id="send-btn" class="material-symbols-rounded">send</span>
+        <div class="message-input" role="form">
+            <textarea placeholder="Enter a message..." spellcheck="false" required aria-label="Chat message input"></textarea>
+            <span id="send-btn" class="material-symbols-rounded" role="button" aria-label="Send message">send</span>
         </div>
     </div>
-
-    
-
-    
 </body>
 </html>
